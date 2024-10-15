@@ -21,22 +21,6 @@ postgresql_auth_method: scram-sha-256
 
 postgresql_user: postgres
 
-
-postgresql_databases:
-  - name: "{{ db_name }}"
-postgresql_users:
-  - name: "{{ user_name }}"
-    password: "{{ user_password }}"
-    priv: ALL
-    db: "{{ db_name }}"
-
-postgresql_hba_entries:
-  - {type: local, database: all, user: postgres, auth_method: peer}
-  - {type: local, database: all, user: all, auth_method: peer}
-  - {type: host, database: "{{ db_name }}", user: "{{ user_name }}", address: "{{ address }}", auth_method: "{{ postgresql_auth_method }}"}
-  - {type: host, database: all, user: all, address: '127.0.0.1/32', auth_method: "{{ postgresql_auth_method }}"}
-  - {type: host, database: all, user: all, address: '::1/128', auth_method: "{{ postgresql_auth_method }}"}
-
 postgresql_locales:
   - 'en_US.UTF-8'
   - 'ru_RU.UTF-8'

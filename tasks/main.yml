@@ -3,13 +3,10 @@
   debug:
     msg: "This host is in {{ env }} environment!!!"
 
-- import_tasks: pre-install.yml
-  tags: install
-
 - block:
-
-  - import_tasks: postgres-install.yml
-    tags: install
+    - import_tasks: pre-install.yml
+    - import_tasks: postgres-install.yml
+  tags: install
 
 - import_tasks: postgres-configure.yml
   tags: configure

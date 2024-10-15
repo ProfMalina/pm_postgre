@@ -5,3 +5,6 @@ ubuntu 22
 # params
 env
 deploy_user
+user_name
+db_name
+white_address
