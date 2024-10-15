@@ -1,0 +1,42 @@
+---
+ansible_ssh_pipelining: true
+
+listen_addresses: '*'
+ssl: off
+max_connections: 100
+shared_buffers: 1GB
+effective_cache_size: 3GB
+maintenance_work_mem: 512MB
+checkpoint_completion_target: 0.9
+wal_buffers: 16MB
+default_statistics_target: 500
+random_page_cost: 1.1
+effective_io_concurrency: 200
+work_mem: 2621kB
+huge_pages: off
+min_wal_size: 4GB
+max_wal_size: 16GB
+
+postgresql_auth_method: scram-sha-256
+
+postgresql_user: postgres
+
+
+postgresql_databases:
+  - name: "{{ db_name }}"
+postgresql_users:
+  - name: "{{ user_name }}"
+    password: "{{ user_password }}"
+    priv: ALL
+    db: "{{ db_name }}"
+
+postgresql_hba_entries:
+  - {type: local, database: all, user: postgres, auth_method: peer}
+  - {type: local, database: all, user: all, auth_method: peer}
+  - {type: host, database: "{{ db_name }}", user: "{{ user_name }}", address: "{{ address }}", auth_method: "{{ postgresql_auth_method }}"}
+  - {type: host, database: all, user: all, address: '127.0.0.1/32', auth_method: "{{ postgresql_auth_method }}"}
+  - {type: host, database: all, user: all, address: '::1/128', auth_method: "{{ postgresql_auth_method }}"}
+
+postgresql_locales:
+  - 'en_US.UTF-8'
+  - 'ru_RU.UTF-8'
